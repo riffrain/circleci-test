@@ -28,3 +28,7 @@ jobs:
           command: |
             docker-compose pull database
             docker-compose build
+      - run:
+          name: Connect DB test
+          command: |
+            docker-compose run php /bin/sh -c "mysql -u root -ppassword -h database -e 'CREATE DATABASE tested;'"
