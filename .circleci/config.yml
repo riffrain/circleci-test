@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    machine:
+      image: circleci/classic:edge
+    steps:
+      - checkout
+#      - restore_cache:
+#          key: docker-{{ checksum ".circleci/config.yml" }}-{{ checksum "docker-compose.yml" }}-{{ checksum "Dockerfile" }}
+#          paths: ~/caches/images.tar
+#      - run:
+#          name: Check cache file, if not exists then pull images and generate cache.
+#          command: |
+#            if [ ! -f ~/caches/images.tar ]; then
+#              docker-compose pull database
+#              docker-compose build
+#              mkdir -p ~/caches
+#              docker save $(docker images | awk 'NR>=2 && ! /^<none>/{print $1}') -o ~/caches/images.tar
+#            fi
+#      - save_cache:
+#          key: docker-{{ checksum ".circleci/config.yml" }}-{{ checksum "docker-compose.yml" }}-{{ checksum "Dockerfile" }}
+#          paths: ~/caches/images.tar
+#      - run:
+#          name: Load Docker images
+#          command: docker load -i ~/caches/images.tar
+      - run:
+          name: Build Docker Image
+          command: |
+            docker-compose pull database
+            docker-compose build

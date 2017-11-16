@@ -1,0 +1,21 @@
+version: "2"
+services:
+  database:
+    image: mysql:5.6.37
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    container_name: database
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+
+  php:
+    build: .
+    container_name: php
+    working_dir: /var/www
+    links:
+      - database
